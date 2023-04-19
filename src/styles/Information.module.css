@@ -1,0 +1,20 @@
+.form {
+  display: grid;
+  grid-template-columns: 30% 1fr;
+  flex-direction: column;
+  row-gap: 1em;
+}
+.form label {
+  text-align: left;
+}
+
+.form button,
+.form .error {
+  grid-column: span 2;
+}
+
+.form .error {
+  color: red;
+  font-size: 13px;
+  line-height: 13px;
+}
