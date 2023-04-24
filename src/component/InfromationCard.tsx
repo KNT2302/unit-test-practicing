@@ -9,7 +9,7 @@ const InfromationCard = ({
   email,
 }: InformationRecord) => {
   return (
-    <Link href={`/detail/${id}`}>
+    <Link href={`/detail/${id}`} data-testid="card-test">
       <div
         style={{
           padding: ".5em 1em",

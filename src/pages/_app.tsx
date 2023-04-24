@@ -1,3 +1,4 @@
+import Layout from "@/component/Layout";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { ReactNode } from "react";
@@ -23,7 +24,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientContanceProvider>
       <Hydrate state={pageProps.dehydratedState}>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </Hydrate>
     </QueryClientContanceProvider>
   );

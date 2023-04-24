@@ -1,0 +1,31 @@
+.loading {
+  position: absolute;
+  top:0;
+  left:0;
+  height: 3px;
+  background-image: linear-gradient(to right, red 20%, yellow);
+  background-size: 20px;
+  opacity: 0;
+  background-position: 0px;
+  animation: loading 1s infinite linear;
+}
+
+.loading.start{
+  opacity: 1;
+  width:20%
+}
+
+.loading.complete{
+  width: 100%;
+  user-select: none;
+  opacity: 0;
+}
+
+@keyframes loading {
+  from {
+    background-position: 0px;
+  }
+  to {
+    background-position: 20px;
+  }
+}

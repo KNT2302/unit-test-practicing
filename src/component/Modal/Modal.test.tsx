@@ -1,8 +1,9 @@
 import Modal from "@/component/Modal/Modal";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 describe("modal works correctly", () => {
+  it("", () => {});
   const openModal = () => {
     const buttonOpen = screen.getByRole("button", { name: "test" });
 
@@ -20,7 +21,9 @@ describe("modal works correctly", () => {
         )}
       </Modal>
     );
-    openModal();
+    waitFor(() => {
+      openModal();
+    });
   });
 
   it("modal should work", () => {

@@ -1,12 +1,23 @@
 import Head from "next/head";
+import { Suspense } from "react";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import NewInformation from "@/feature/NewInformation/NewInform";
 import InformationList from "@/component/InformationList";
-import { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import { GetServerSideProps, GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { Information, InformationRecord } from "@/utils/model";
 import { dehydrate, useQuery } from "react-query";
 import { queryClient } from "./_app";
+import dynamic from "next/dynamic";
+import Modal from "@/component/Modal/Modal";
+import Link from "next/link";
+
+const NewInformation = dynamic(
+  () => import("@/feature/NewInformation/NewInform"),
+  {
+    ssr: false,
+    loading: () => <div>Loading...</div>
+  }
+);
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,8 +47,15 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
+        <Link href={'/fetch'}>Go to Fetch page</Link>
         <h1>PERSONAL INFORMATION</h1>
-        <NewInformation />
+
+        <Modal modalName="New">
+          {(handleClose) => (
+              <NewInformation handleClose={handleClose} />
+          )}
+        </Modal>
+
         {informations && <InformationList informations={informations || []} />}
         {isLoading && <div>Loading...</div>}
       </main>
@@ -47,14 +65,13 @@ const Home: NextPage = () => {
 
 export default Home;
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   await queryClient.prefetchQuery(["informations"], getList);
 
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
     },
-    revalidate: 10,
   };
 };
 

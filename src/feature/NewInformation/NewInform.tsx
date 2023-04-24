@@ -22,83 +22,79 @@ const InFromationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
 });
 
-const NewInformation = () => {
+const NewInformation = ({ handleClose }: { handleClose: () => void }) => {
   const addInformationMutation = useMutation({
     mutationFn: addInformation,
     onSuccess: () => queryClient.invalidateQueries(["informations"]),
   });
   return (
-    <Modal modalName="New">
-      {(handleClose) => (
-        <>
-          <h1>New Information</h1>
-          <Formik
-            initialValues={{ firstName: "", lastName: "", email: "" }}
-            validationSchema={InFromationSchema}
-            onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                handleClose();
-                addInformationMutation.mutate({ ...values });
-                setSubmitting(false);
-              }, 400);
-            }}
-          >
-            {({
-              values,
-              errors,
-              touched,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              isSubmitting,
-              /* and other goodies */
-            }) => (
-              <form onSubmit={handleSubmit} className={styles.form}>
-                <label id="email">Email:</label>
-                <Input
-                  type="text"
-                  name="email"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.email}
-                  aria-labelledby="email"
-                />
-                <p className={styles.error}>
-                  {errors.email && touched.email && errors.email}
-                </p>
-                <label id="firstName">Firstname:</label>
-                <Input
-                  type="text"
-                  name="firstName"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.firstName}
-                  aria-labelledby="firstName"
-                />
-                <p className={styles.error}>
-                  {errors.firstName && touched.firstName && errors.firstName}
-                </p>
-                <label id="lastName">Lastname:</label>
-                <Input
-                  type="text"
-                  name="lastName"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.lastName}
-                  aria-labelledby="lastName"
-                />
-                <p className={styles.error}>
-                  {errors.lastName && touched.lastName && errors.lastName}
-                </p>
-                <button type="submit" disabled={isSubmitting}>
-                  Submit
-                </button>
-              </form>
-            )}
-          </Formik>
-        </>
-      )}
-    </Modal>
+    <div>
+      <h1>New Information</h1>
+      <Formik
+        initialValues={{ firstName: "", lastName: "", email: "" }}
+        validationSchema={InFromationSchema}
+        onSubmit={(values, { setSubmitting }) => {
+          setTimeout(() => {
+            handleClose();
+            addInformationMutation.mutate({ ...values });
+            setSubmitting(false);
+          }, 400);
+        }}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting,
+          /* and other goodies */
+        }) => (
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <label id="email">Email:</label>
+            <Input
+              type="text"
+              name="email"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.email}
+              aria-labelledby="email"
+            />
+            <p className={styles.error}>
+              {errors.email && touched.email && errors.email}
+            </p>
+            <label id="firstName">Firstname:</label>
+            <Input
+              type="text"
+              name="firstName"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.firstName}
+              aria-labelledby="firstName"
+            />
+            <p className={styles.error}>
+              {errors.firstName && touched.firstName && errors.firstName}
+            </p>
+            <label id="lastName">Lastname:</label>
+            <Input
+              type="text"
+              name="lastName"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.lastName}
+              aria-labelledby="lastName"
+            />
+            <p className={styles.error}>
+              {errors.lastName && touched.lastName && errors.lastName}
+            </p>
+            <button type="submit" disabled={isSubmitting}>
+              Submit
+            </button>
+          </form>
+        )}
+      </Formik>
+    </div>
   );
 };
 
